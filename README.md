@@ -2,9 +2,9 @@
 
 Simple helper to highlight inaccessible markup.
 
-![Example of empty title attribute warning](assets/images/markup-warnings-empty-title.png)
+<img src="assets/images/markup-warnings-empty-title.png" alt="Example of empty title attribute warning" width="170"/>
 
-![Example of title and aria-label warning](assets/images/markup-warnings-title-and-aria-label.png)
+<img src="assets/images/markup-warnings-title-and-aria-label.png" alt="Example of title and aria-label warning" width="200"/>
 
 Currently this POC only uses CSS Selectors to locate problem markup. To be more comprehensive we'll need the help of Javascript in a future version.
 
