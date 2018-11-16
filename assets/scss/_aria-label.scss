@@ -1,9 +1,5 @@
 // aria-label & aria-labelledby
 
-a:empty:not([title]):not([aria-label]) {
-  @include error('<a> missing text');
-}
-
 // https://www.w3.org/TR/using-aria/#label-support
 
 a:empty:not([title]):not([aria-label]) {
@@ -71,14 +67,4 @@ aside {
   }
 }
 
-// Invalid aria-label caused by bad data:
-* {
-  @each $attr in aria-label, aria-labelledby, aria-describedby {
-    @each $val in 'null', 'undefined', 'true', 'false', 'NaN', '0' {
-      // Eg: *[alt='null']
-      &[#{$attr}='#{$val}'] {
-        @include warning("<img> with alt='#{$attr}' is invalid");
-      }
-    }
-  }
-}
+
