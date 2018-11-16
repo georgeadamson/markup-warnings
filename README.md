@@ -10,15 +10,23 @@ Currently this POC only uses CSS Selectors to locate problem markup. To be more 
 
 ## Usage
 
+### Option 1: Browser bookmark
 Add this Bookmarklet to your browser:
 
 * Name: Markup warnings
 * URL: `javascript:(function(d,id,el){if(el=d.getElementById(id)){d.head.removeChild(el)}else{el=d.createElement('link');el.rel='stylesheet';el.id=id;el.href='https://unpkg.com/markup-warnings';el.setAttribute('data-project-homepage','https://github.com/georgeadamson/markup-warnings');d.head.appendChild(el)}})(document,'_markup-warnings_')`
 
-Tip: Sometimes Chrome will strip off the "javascript:" prefix when you paste the URL, make sure it's still there.
+Tip: Sometimes Chrome will strip off the "javascript:" prefix when you paste the URL, so make sure it's still there.
 
-![Bookmarklet dialog in Chrome](assets/images/markup-warnings-add-bookmarklet-chrome.png)
+<img src="assets/images/markup-warnings-add-bookmarklet-chrome.png" alt="Bookmarklet dialog in Chrome" width="200"/>
 
+### Option 2: Include stylesheet in your page
+
+Add the following stylesheet tag to your page during development. Do not use in production!
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/markup-warnings" />
+```
 
 ## To develop this project
 
@@ -33,3 +41,6 @@ $ cd markup-warnings
 $ npm install
 $ gulp
 ```
+
+## What markup problems does this test for?
+As many as we can, within the limits of CSS selectors. Look in the scss source files for details. They're largely organised by the type of markup they're targeting, such as aria-label or img alt.
