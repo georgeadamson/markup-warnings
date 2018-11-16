@@ -1,0 +1,9 @@
+// aria-describedby
+
+// aria-describedby on a span or div will be ignored by NVDA and VoiceOver unless given an interactive role, an image or landmark role.
+@each $tag in div, span {
+  // Eg: div[aria-describedby]:not([role])
+  #{$tag}[aria-describedby]:not([role]) {
+    @include warning('aria-describedby on <#{$tag}> may not work on NVDA');
+  }
+}

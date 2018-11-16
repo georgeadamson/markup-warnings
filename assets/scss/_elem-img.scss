@@ -1,0 +1,74 @@
+// WARNING: Support for :pseudo element on <img> is largely unsupported
+//          so most of these warnings will not appear.
+
+// Unhelpful img alt consisting of one word:
+img {
+  &[alt]:not([alt='']):not([alt*=' ']):not([alt*='-']) {
+    @include warning('<img> with one-word alt text may be unhelpful');
+  }
+}
+
+img {
+  // Eg: img[alt=' ']
+  &[alt=' '],
+  &[alt='  '],
+  &[alt='   '],
+  &[alt='    '] {
+    @include error('<img> with alt text consisting of spaces is invalid');
+  }
+}
+
+// Not exactly i18n friendly but better than nothing:
+img {
+  @each $val in 'Photo of', 'Picture of', 'Image of' {
+    // Eg: img[alt^='Picture of']
+    &[alt^='#{$val}'],
+    &[alt^='#{to-lower-case($val)}'] {
+      @include warning(
+        "<img> with alt text starting with '#{$val}...' is unhelpful"
+      );
+    }
+  }
+}
+
+// Invalid img alt caused by bad data:
+img {
+  @each $attr in 'null', 'undefined', 'true', 'false', 'NaN', '0' {
+    // Eg: img[alt='null']
+    &[alt='#{$attr}'] {
+      @include warning("<img> with alt='#{$attr}' is unhelpful");
+    }
+  }
+}
+
+// IMG with null ALT and non-null aria-label attributes
+// https://www.powermapper.com/tests/screen-readers/labelling/img-null-alt-aria-label/
+img[alt=''] {
+  @each $aria in aria-label, aria-labelledby {
+    // Eg: img[alt=''][aria-label]
+    &[#{$aria}] {
+      @include warning(
+        '<img> with #{$aria} and an empty alt attribute is confusing'
+      );
+    }
+  }
+}
+
+// No need for both alt and title/aria-label/aria-labelledby:
+img[alt]:not([alt='']) {
+  @each $attr in title, aria-label, aria-labelledby {
+    &[#{$attr}] {
+      @include error('<img> should not have both alt & #{$attr} attributes');
+    }
+  }
+}
+
+// Img missing alt:
+img:not([alt]) {
+  @include error('<img> missing alt attribute');
+}
+
+// Empty alt is ok for decorative images so let's ignore:
+// img[alt=''] {
+//   @include warning('<img> with empty alt attribute')
+// }

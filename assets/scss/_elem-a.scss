@@ -1,0 +1,11 @@
+a[href=''] {
+  @include error('<a> has empty href=""');
+}
+
+a[href='#'] {
+  @include warning('<a> has invalid href="#"');
+}
+
+a:empty:not([title]):not([aria-label]):not([aria-labelledby]) {
+  @include warning('<a> has missing text');
+}

@@ -1,0 +1,9 @@
+// <button>
+
+button {
+  &:empty:not([aria-label]):not([aria-labelledby]) {
+    @include error(
+      '<button> without aria-label or aria-labelledby must contain text'
+    );
+  }
+}

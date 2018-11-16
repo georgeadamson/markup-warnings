@@ -1,0 +1,7 @@
+*[title] {
+  @include warning('Consider whether this really needs a title attribute');
+}
+
+*[title][aria-label] {
+  @include warning('Tag has both title & aria-label');
+}

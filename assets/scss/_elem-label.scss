@@ -1,0 +1,11 @@
+// <label>
+
+label {
+  &:empty {
+    @include error('<label> cannot be empty');
+  }
+
+  &[for]:empty {
+    @include error('<label> for a field must contain text');
+  }
+}

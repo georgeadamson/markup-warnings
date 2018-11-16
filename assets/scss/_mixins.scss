@@ -1,0 +1,49 @@
+%warning {
+  position: relative;
+  outline: 1px dashed #000;
+
+  &:after {
+    background-color: #f6e232;
+    box-shadow: 0px 1px 2px 0px; // shadow color will be from text color
+    color: #000;
+
+    content: 'Warning!';
+    font-family: sans-serif;
+    font-size: 0.5rem;
+    white-space: nowrap;
+
+    padding: 0.1em;
+
+    display: block;
+    position: absolute;
+    min-width: 0.5rem;
+    min-height: 0.5rem;
+    left: 1em;
+    top: 1em;
+    transform: rotate(-4deg);
+    //z-index: 1;
+  }
+}
+
+%error {
+  @extend %warning;
+  &:after {
+    background-color: #f4e834;
+    color: #000;
+    content: 'Error!';
+  }
+}
+
+@mixin warning($message) {
+  @extend %warning;
+  &:after {
+    content: '💩 #{$message}';
+  }
+}
+
+@mixin error($message) {
+  @extend %error;
+  &:after {
+    content: '⚠️ #{$message}';
+  }
+}

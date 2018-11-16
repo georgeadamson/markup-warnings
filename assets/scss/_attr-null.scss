@@ -1,0 +1,12 @@
+// Invalid attribute value caused by bad data:
+* {
+  @each $attr in title, alt, href, aria-label, aria-labelledby, aria-describedby
+  {
+    @each $val in 'null', 'undefined', 'true', 'false', 'NaN', '0' {
+      // Eg: *[alt='null']
+      &[#{$attr}='#{$val}'] {
+        @include warning("Attribute #{$attr}='#{$val}' is invalid");
+      }
+    }
+  }
+}

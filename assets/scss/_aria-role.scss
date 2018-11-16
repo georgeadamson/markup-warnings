@@ -1,0 +1,17 @@
+// tag list adapted from https://www.w3.org/TR/html-aria/
+
+@each $tag in a, article, aside, body, datalist, button, dd, dt, details,
+  fieldset, figure, footer, form, h1, h2, h3, h4, h5, h6, article header,
+  aside header, main header, nav header, section header, hr, img,
+  "input[type='button']", "input[type='checkbox']", "input[type='email']",
+  "input[type='image']", "input[type='number']", "input[type='radio']",
+  "input[type='range']", "input[type='reset']", "input[type='search']",
+  "input[type='submit']", "input[type='tel']:not([list])", "input[type='url']",
+  li, main, math, menu, menuitem, nav, ol, optgroup, option, output, progress,
+  section, select, summary, table, textarea, tbody, thead, tfoot, td, th, tr, ul
+{
+  // Eg: article[role]
+  #{$tag}[role] {
+    @include warning('#{$tag} should not have ARIA role attribute');
+  }
+}
