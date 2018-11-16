@@ -18,7 +18,7 @@ Add this Bookmarklet to your browser:
 
 Tip: Sometimes Chrome will strip off the "javascript:" prefix when you paste the URL, so make sure it's still there.
 
-<img src="assets/images/markup-warnings-add-bookmarklet-chrome.png" alt="Bookmarklet dialog in Chrome" width="200"/>
+<img src="assets/images/markup-warnings-add-bookmarklet-chrome.png" alt="Bookmarklet dialog in Chrome" width="400"/>
 
 ### Option 2: Include stylesheet in your page
 
