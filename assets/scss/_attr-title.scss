@@ -1,7 +1,15 @@
 *[title] {
-  @include warning('Consider whether this really needs a title attribute');
+  @include warning('Avoid title attribute because of inconsistent UX');
 }
 
-*[title][aria-label] {
-  @include warning('Tag has both title & aria-label');
+*[title=''] {
+  @include warning('Tag has empty title attribute');
+}
+
+*[title] {
+  @each $attr in aria-label, aria-labelledby {
+    &[#{$attr}] {
+      @include warning('Tag should not have both title & #{$attr}');
+    }
+  }
 }

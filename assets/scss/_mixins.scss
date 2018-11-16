@@ -1,15 +1,23 @@
 %warning {
-  position: relative;
+  /* Highlight element with a dotted line and ensure our message will position correctly: */
   outline: 1px dashed #000;
+  position: relative;
 
   &:after {
-    background-color: #f6e232;
-    box-shadow: 0px 1px 2px 0px; // shadow color will be from text color
+    /* Define our warning & error messages: */
+
+    // Default message: (Should be overridden by each warning)
+    content: 'Warning!';
+
+    // Deliberately override all background styles, not just background-color:
+    background: #f6e232;
+    // shadow color default to text color:
+    box-shadow: 0px 1px 2px 0px;
     color: #000;
 
-    content: 'Warning!';
     font-family: sans-serif;
     font-size: 0.5rem;
+    line-height: 2;
     white-space: nowrap;
 
     padding: 0.1em;
@@ -20,6 +28,14 @@
     min-height: 0.5rem;
     left: 1em;
     top: 1em;
+
+    // These are only included to override any existing page styles:
+    bottom: auto;
+    right: auto;
+    height: auto;
+    width: auto;
+
+    // Jaunty angle to help distinguish from standard page design:
     transform: rotate(-4deg);
     //z-index: 1;
   }
@@ -27,9 +43,13 @@
 
 %error {
   @extend %warning;
+
   &:after {
-    background-color: #f4e834;
+    /* Define our error messages: */
+    background: #f4e834;
     color: #000;
+
+    // Default message: (Should be overridden by each error)
     content: 'Error!';
   }
 }
