@@ -6,7 +6,7 @@ Helper to highlight inaccessible markup.
 
 Add this Bookmarklet to your browser:
 
-🔗 `javascript:(function(d,l){l=d.createElement('link');l.rel='stylesheet';l.href='https://unpkg.com/markup-warnings';d.body.appendChild(l)})(document)`
+🔗 `javascript:(function(d,id,el){el=d.getElementById(id);if(el){d.body.removeChild(el)}else{el=d.createElement('link');el.rel='stylesheet';el.id=id;el.href='https://unpkg.com/markup-warnings';el.setAttribute('data-project-homepage','https://github.com/georgeadamson/markup-warnings');d.body.appendChild(el)}})(document,'_markup-warnings_')`
 
 
 ## To develop this project
