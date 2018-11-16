@@ -6,7 +6,7 @@ Helper to highlight inaccessible markup.
 
 Add this Bookmarklet to your browser:
 
-🔗 <a href="javascript:(function(d,l){l=d.createElement('link');l.rel='stylesheet';l.href='https://unpkg.com/markup-warnings';d.body.appendChild(l)})(document)">Markup warnings</a>
+🔗 `javascript:(function(d,l){l=d.createElement('link');l.rel='stylesheet';l.href='https://unpkg.com/markup-warnings';d.body.appendChild(l)})(document)`
 
 
 ## To develop this project
