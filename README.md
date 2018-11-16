@@ -2,11 +2,19 @@
 
 Helper to highlight inaccessible markup.
 
-## Requirements
+## Usage
+
+Add this Bookmarklet to your browser:
+
+[Markup warnings](javascript:(function(d,l){l=d.createElement('link');l.rel='stylesheet';l.href='https://unpkg.com/markup-warnings';d.body.appendChild(l)})(document))
+
+
+## To develop this project
+
+### Requirements
 
 **[Node.js](http://nodejs.org) v4.x.x - v6.9.x .**
 
-## Quickstart
 
 ```bash
 $ git clone https://github.com/georgeadamson/markup-warnings.git
