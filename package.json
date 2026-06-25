@@ -1,6 +1,6 @@
 {
   "name": "markup-warnings",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "CSS-only development helper for highlighting inaccessible or suspicious HTML and ARIA markup.",
   "keywords": [
     "accessibility",
