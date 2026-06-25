@@ -62,6 +62,30 @@ test('repository includes an ISC license file', () => {
   assert.match(licenseText, /THE SOFTWARE IS PROVIDED "AS IS"/);
 });
 
+test('GitHub Pages workflow builds and deploys the demo page', () => {
+  const workflowText = readProjectFile('.github/workflows/deploy-demo.yml');
+
+  assert.match(workflowText, /name:\s*Deploy demo to GitHub Pages/);
+  assert.match(workflowText, /branches:\n\s+- master/);
+  assert.match(workflowText, /workflow_dispatch:/);
+  assert.match(workflowText, /uses:\s*actions\/checkout@v6/);
+  assert.match(workflowText, /uses:\s*actions\/setup-node@v6/);
+  assert.match(workflowText, /node-version:\s*24/);
+  assert.match(workflowText, /run:\s*npm ci/);
+  assert.match(workflowText, /run:\s*npm test/);
+  assert.match(workflowText, /run:\s*npm run build/);
+  assert.match(workflowText, /cp index\.html _site\//);
+  assert.match(workflowText, /cp assets\/dist\/css\/app\.css _site\/assets\/dist\/css\/app\.css/);
+  assert.match(workflowText, /cp -R assets\/images\/\. _site\/assets\/images\//);
+  assert.match(workflowText, /touch _site\/\.nojekyll/);
+  assert.match(workflowText, /uses:\s*actions\/configure-pages@v5/);
+  assert.match(workflowText, /uses:\s*actions\/upload-pages-artifact@v4/);
+  assert.match(workflowText, /path:\s*_site/);
+  assert.match(workflowText, /pages:\s*write/);
+  assert.match(workflowText, /id-token:\s*write/);
+  assert.match(workflowText, /uses:\s*actions\/deploy-pages@v4/);
+});
+
 test('package scripts use Sass and PostCSS instead of Gulp', () => {
   const pkg = JSON.parse(readProjectFile('package.json'));
   const scriptText = Object.values(pkg.scripts).join(' ');

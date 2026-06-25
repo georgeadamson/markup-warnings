@@ -111,6 +111,45 @@
         font-size: clamp(1.04rem, 2vw, 1.22rem);
       }
 
+      .bookmarklet-callout {
+        display: grid;
+        gap: 10px;
+        max-width: 760px;
+        margin-top: 24px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fafaf6;
+        padding: 16px;
+      }
+
+      .bookmarklet-callout p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .bookmarklet-callout strong {
+        color: var(--ink);
+      }
+
+      .bookmarklet-callout pre {
+        overflow-x: auto;
+        margin: 0;
+        border-radius: 6px;
+        background: var(--code);
+        color: #f5f7f2;
+        font-size: 0.82rem;
+        padding: 12px;
+      }
+
+      .bookmarklet-callout code {
+        display: block;
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        white-space: pre;
+      }
+
       .hero-preview {
         display: grid;
         gap: 12px;
@@ -400,6 +439,10 @@
             This page loads the local warning stylesheet and intentionally
             renders problematic markup so each selector can be seen in context.
           </p>
+          <div class="bookmarklet-callout">
+            <p><strong>Bookmarklet:</strong> Markup warnings</p>
+            <pre><code>javascript:(function(d,id,el){if(el=d.getElementById(id)){d.head.removeChild(el)}else{el=d.createElement('link');el.rel='stylesheet';el.id=id;el.href='https://unpkg.com/markup-warnings';el.setAttribute('data-project-homepage','https://github.com/georgeadamson/markup-warnings');d.head.appendChild(el)}})(document,'_markup-warnings_')</code></pre>
+          </div>
         </div>
 
         <figure class="hero-preview">
