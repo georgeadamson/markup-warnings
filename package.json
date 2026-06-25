@@ -23,7 +23,6 @@
     "index.html"
   ],
   "scripts": {
-    "start": "npm run dev",
     "dev": "npm run build:dev && concurrently -n css,server -c blue,green \"npm:watch:css\" \"npm:serve\"",
     "serve": "browser-sync start --server . --files \"index.html,assets/dist/css/app.css\"",
     "watch:css": "chokidar \"assets/scss/**/*.scss\" -c \"npm run build:dev\"",
