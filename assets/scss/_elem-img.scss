@@ -1,3 +1,6 @@
+@use 'sass:string';
+@use './mixins' as *;
+
 // WARNING: Support for :pseudo element on <img> is largely unsupported
 //          so most of these warnings will not appear.
 
@@ -23,7 +26,7 @@ img {
   @each $val in 'Photo of', 'Picture of', 'Image of' {
     // Eg: img[alt^='Picture of']
     &[alt^='#{$val}'],
-    &[alt^='#{to-lower-case($val)}'] {
+    &[alt^='#{string.to-lower-case($val)}'] {
       @include warning(
         "<img> with alt text starting with '#{$val}...' is unhelpful"
       );

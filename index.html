@@ -1,60 +1,723 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Basic sass template</title>
+    <title>Markup Warnings Demo</title>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Basic Sass Boilerplate" />
+    <meta
+      name="description"
+      content="Demo page for the markup-warnings CSS accessibility overlay."
+    />
     <link href="assets/dist/css/app.css" rel="stylesheet" />
+
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f7f2;
+        --ink: #1e2329;
+        --muted: #667085;
+        --panel: #ffffff;
+        --line: #d7d8cd;
+        --code: #242a31;
+        --brand: #285f74;
+        --accent: #b44535;
+        --ok: #25745b;
+        --warning: #f6e232;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        line-height: 1.5;
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      body {
+        margin: 0;
+      }
+
+      a {
+        color: var(--brand);
+      }
+
+      code {
+        border-radius: 4px;
+        background: #eff0ea;
+        color: var(--code);
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: 0.92em;
+        padding: 0.12rem 0.28rem;
+      }
+
+      .page-shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .site-header {
+        border-bottom: 1px solid var(--line);
+        background: #ffffff;
+      }
+
+      .site-header__inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
+        gap: 32px;
+        align-items: center;
+        min-height: 340px;
+        padding: 48px 0;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.12;
+      }
+
+      h1 {
+        max-width: 760px;
+        font-size: clamp(2.4rem, 6vw, 5.4rem);
+      }
+
+      h2 {
+        font-size: clamp(1.7rem, 3vw, 2.6rem);
+      }
+
+      h3 {
+        font-size: 1.05rem;
+      }
+
+      .lead {
+        max-width: 710px;
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: clamp(1.04rem, 2vw, 1.22rem);
+      }
+
+      .hero-preview {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+
+      .hero-preview img {
+        display: block;
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #e7e8dd;
+      }
+
+      .hero-preview figcaption {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .demo-intro {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        padding: 28px 0;
+      }
+
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 18px;
+      }
+
+      .stat strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--brand);
+        font-size: 1.45rem;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .demo-section {
+        border-top: 1px solid var(--line);
+        padding: 42px 0;
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(180px, 320px) minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+        margin-bottom: 24px;
+      }
+
+      .section-heading p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .example-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .example {
+        display: grid;
+        grid-template-rows: auto minmax(92px, auto) auto;
+        gap: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 18px;
+      }
+
+      .example__header {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        border-radius: 999px;
+        background: #edf4f1;
+        color: var(--ok);
+        font-size: 0.75rem;
+        font-weight: 800;
+        padding: 0 10px;
+        text-transform: uppercase;
+      }
+
+      .badge--error {
+        background: #f8e9e5;
+        color: var(--accent);
+      }
+
+      .sample {
+        display: grid;
+        align-items: center;
+        min-height: 96px;
+        border: 1px dashed #bec1b5;
+        border-radius: 8px;
+        background: #fafaf6;
+        padding: 26px 18px;
+      }
+
+      .sample--tall {
+        min-height: 152px;
+      }
+
+      .sample__stack {
+        display: grid;
+        gap: 18px;
+      }
+
+      .sample a:empty,
+      .sample button:empty,
+      .sample label:empty {
+        display: inline-block;
+        min-width: 96px;
+        min-height: 34px;
+      }
+
+      .sample button {
+        width: fit-content;
+        min-height: 36px;
+        border: 1px solid #9da39a;
+        border-radius: 6px;
+        background: #ffffff;
+        color: var(--ink);
+        font: inherit;
+        padding: 0 14px;
+      }
+
+      .sample label:empty {
+        border: 1px solid #9da39a;
+        border-radius: 4px;
+        background: #ffffff;
+      }
+
+      .demo-image {
+        display: block;
+        width: 140px;
+        max-width: 100%;
+        min-height: 76px;
+        object-fit: cover;
+        border-radius: 6px;
+        background: #e4e6dd;
+      }
+
+      .role-demo,
+      .label-demo {
+        display: block;
+        width: fit-content;
+        max-width: 100%;
+        border: 1px solid #c9ccbe;
+        border-radius: 6px;
+        background: #ffffff;
+        padding: 10px 12px;
+      }
+
+      .example__code {
+        overflow-x: auto;
+        margin: 0;
+        border-radius: 6px;
+        background: var(--code);
+        color: #f5f7f2;
+        font-size: 0.84rem;
+        padding: 12px;
+      }
+
+      .example__code code {
+        display: block;
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        white-space: pre;
+      }
+
+      .valid-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .valid-item {
+        display: grid;
+        gap: 8px;
+        border-left: 4px solid var(--ok);
+        border-radius: 6px;
+        background: #ffffff;
+        padding: 14px;
+      }
+
+      .valid-item p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .valid-item__target {
+        min-height: 40px;
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0 40px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 820px) {
+        .site-header__inner,
+        .section-heading,
+        .example-grid,
+        .valid-strip,
+        .demo-intro {
+          grid-template-columns: 1fr;
+        }
+
+        .site-header__inner {
+          min-height: 0;
+          padding: 34px 0;
+        }
+
+        .example {
+          grid-template-rows: auto auto auto;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <div id="example">
-      <h1>Markup Warnings CSS</h1>
+    <header class="site-header">
+      <div class="page-shell site-header__inner">
+        <div>
+          <p class="eyebrow">CSS accessibility overlay</p>
+          <h1>Markup Warnings Demo</h1>
+          <p class="lead">
+            This page loads the local warning stylesheet and intentionally
+            renders problematic markup so each selector can be seen in context.
+          </p>
+        </div>
 
-      <style>
-        html {
-          font-family: sans-serif;
-        }
-        li {
-          min-height: 3em;
-        }
-        img {
-          display: inline-block;
-          height: 50px;
-          min-width: 50px;
-        }
-      </style>
-
-      <ul>
-        <li>
-          <span title="Superfluous title attr">Superfluous title attr</span>
-        </li>
-
-        <li><a href="">Link with href=""</a></li>
-        <li><a href="#">Link with href="#"</a></li>
-        <li>Link with no content: <a href="/"></a></li>
-        <li>
-          Link with img with no alt
-          <a href="/">
-            <img
-              src="https://www.dove.com/content/dam/unilever/dove/global/general_image/personal_care_unidentified/personal_care_unidentified/TAB-504077.jpg.ulenscale.1199x562.jpg"
-              alt=""
-            />
-          </a>
-          (Not detectable via CSS)
-        </li>
-
-        <li><img src="" /></li>
-
-        <li>
+        <figure class="hero-preview">
           <img
-            src="https://www.dove.com/content/dam/unilever/dove/global/general_image/personal_care_unidentified/personal_care_unidentified/TAB-504077.jpg.ulenscale.1199x562.jpg"
-            alt=""
+            src="assets/images/markup-warnings-title-and-aria-label.png"
+            alt="Markup warning overlay screenshot"
+            width="400"
+            height="198"
           />
-        </li>
-      </ul>
-    </div>
+          <figcaption>
+            Warnings are applied with CSS only, so they can be toggled on any
+            page during development.
+          </figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <main>
+      <div class="page-shell">
+        <div class="demo-intro">
+          <div class="stat">
+            <strong>9</strong>
+            <span>rule groups are loaded from the Sass entrypoint.</span>
+          </div>
+          <div class="stat">
+            <strong>CSS</strong>
+            <span>selectors identify the problematic markup directly.</span>
+          </div>
+          <div class="stat">
+            <strong>Local</strong>
+            <span>this page uses <code>assets/dist/css/app.css</code>.</span>
+          </div>
+        </div>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>Attribute Warnings</h2>
+            <p>
+              Empty, duplicated, or data-leaked attributes are highlighted
+              across elements.
+            </p>
+          </div>
+
+          <div class="example-grid">
+            <article class="example">
+              <div class="example__header">
+                <h3>Empty title</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <span title="">Hover-only hint</span>
+              </div>
+              <pre class="example__code"><code>&lt;span title=""&gt;Hover-only hint&lt;/span&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Title plus label</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <button title="Save item" aria-label="Save item">Save</button>
+              </div>
+              <pre class="example__code"><code>&lt;button title="Save item" aria-label="Save item"&gt;Save&lt;/button&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Invalid data value</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <button aria-label="0"></button>
+              </div>
+              <pre class="example__code"><code>&lt;button aria-label="0"&gt;&lt;/button&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Empty href</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <a href="">Reload current page</a>
+              </div>
+              <pre class="example__code"><code>&lt;a href=""&gt;Reload current page&lt;/a&gt;</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>Link Warnings</h2>
+            <p>
+              Anchor checks catch placeholder URLs and links that have no
+              accessible text.
+            </p>
+          </div>
+
+          <div class="example-grid">
+            <article class="example">
+              <div class="example__header">
+                <h3>Placeholder hash</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <a href="#">Continue</a>
+              </div>
+              <pre class="example__code"><code>&lt;a href="#"&gt;Continue&lt;/a&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Missing text</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <a href="/"></a>
+              </div>
+              <pre class="example__code"><code>&lt;a href="/"&gt;&lt;/a&gt;</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>Image Warnings</h2>
+            <p>
+              The image rules flag missing alt text, suspicious alt values, and
+              competing labels. Some browser engines do not render pseudo
+              elements on images, but outlines still show the target.
+            </p>
+          </div>
+
+          <div class="example-grid">
+            <article class="example">
+              <div class="example__header">
+                <h3>Missing alt</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample sample--tall">
+                <img
+                  class="demo-image"
+                  src="assets/images/markup-warnings-empty-title.png"
+                  width="170"
+                  height="168"
+                />
+              </div>
+              <pre class="example__code"><code>&lt;img src="example.png"&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>One-word alt</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample sample--tall">
+                <img
+                  class="demo-image"
+                  src="assets/images/markup-warnings-title-and-aria-label.png"
+                  alt="Chart"
+                  width="200"
+                  height="99"
+                />
+              </div>
+              <pre class="example__code"><code>&lt;img src="chart.png" alt="Chart"&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Unhelpful prefix</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample sample--tall">
+                <img
+                  class="demo-image"
+                  src="assets/images/markup-warnings-title-and-aria-label.png"
+                  alt="Picture of warning overlay"
+                  width="200"
+                  height="99"
+                />
+              </div>
+              <pre class="example__code"><code>&lt;img src="overlay.png" alt="Picture of warning overlay"&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Alt and title</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample sample--tall">
+                <img
+                  class="demo-image"
+                  src="assets/images/markup-warnings-title-and-aria-label.png"
+                  alt="Warning overlay example"
+                  title="Warning overlay example"
+                  width="200"
+                  height="99"
+                />
+              </div>
+              <pre class="example__code"><code>&lt;img src="overlay.png" alt="Warning overlay example" title="Warning overlay example"&gt;</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>Form Warnings</h2>
+            <p>
+              Empty labels and buttons are marked because they leave controls
+              unnamed.
+            </p>
+          </div>
+
+          <div class="example-grid">
+            <article class="example">
+              <div class="example__header">
+                <h3>Empty label</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <label></label>
+              </div>
+              <pre class="example__code"><code>&lt;label&gt;&lt;/label&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Empty field label</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <div class="sample__stack">
+                  <label for="demo-name"></label>
+                  <input id="demo-name" name="demo-name" type="text" />
+                </div>
+              </div>
+              <pre class="example__code"><code>&lt;label for="demo-name"&gt;&lt;/label&gt;
+&lt;input id="demo-name" type="text"&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Empty button</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <button></button>
+              </div>
+              <pre class="example__code"><code>&lt;button&gt;&lt;/button&gt;</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>ARIA Warnings</h2>
+            <p>
+              ARIA checks focus on redundant roles and labels that are ignored
+              or inconsistently exposed by assistive technology.
+            </p>
+          </div>
+
+          <div class="example-grid">
+            <article class="example">
+              <div class="example__header">
+                <h3>Native role</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <article class="role-demo" role="article">Article preview</article>
+              </div>
+              <pre class="example__code"><code>&lt;article role="article"&gt;Article preview&lt;/article&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Label on div</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <div class="label-demo" aria-label="Summary">Summary</div>
+              </div>
+              <pre class="example__code"><code>&lt;div aria-label="Summary"&gt;Summary&lt;/div&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Label on heading</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <h3 aria-label="Hidden report title">Quarterly report</h3>
+              </div>
+              <pre class="example__code"><code>&lt;h3 aria-label="Hidden report title"&gt;Quarterly report&lt;/h3&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Description on span</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <span aria-describedby="demo-help">More details</span>
+                <span id="demo-help" hidden>Extra details</span>
+              </div>
+              <pre class="example__code"><code>&lt;span aria-describedby="demo-help"&gt;More details&lt;/span&gt;</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>Clean Controls</h2>
+            <p>
+              These examples should stay quiet while the warning stylesheet is
+              active.
+            </p>
+          </div>
+
+          <div class="valid-strip">
+            <div class="valid-item">
+              <div class="valid-item__target">
+                <a href="https://github.com/georgeadamson/markup-warnings">Project repository</a>
+              </div>
+              <p>A real destination and visible link text.</p>
+            </div>
+            <div class="valid-item">
+              <div class="valid-item__target">
+                <button type="button">Save changes</button>
+              </div>
+              <p>A text button with an accessible name.</p>
+            </div>
+            <div class="valid-item">
+              <div class="valid-item__target">
+                <img
+                  class="demo-image"
+                  src="assets/images/markup-warnings-add-bookmarklet-chrome.png"
+                  alt="Bookmarklet dialog in Chrome"
+                  width="400"
+                  height="230"
+                />
+              </div>
+              <p>Image alt text that describes the visible content.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-shell">
+        <p>
+          Use <code>npm start</code> to rebuild the CSS and serve this demo with
+          BrowserSync.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

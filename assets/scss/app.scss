@@ -1,16 +1,14 @@
-@import './_mixins';
-
 // Attributes:
-@import './_attr-null';
-@import './_attr-title';
+@use './attr-null';
+@use './attr-title';
 
 // ARIA:
-@import './_aria-role';
-@import './_aria-label';
-@import './_aria-describedby';
+@use './aria-role';
+@use './aria-label';
+@use './aria-describedby';
 
 // Elements:
-@import './_elem-a';
-@import './_elem-img';
-@import './_elem-label';
-@import './_elem-button';
+@use './elem-a';
+@use './elem-img';
+@use './elem-label';
+@use './elem-button';

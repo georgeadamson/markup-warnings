@@ -1,3 +1,5 @@
+@use './mixins' as *;
+
 // aria-label & aria-labelledby
 
 // https://www.w3.org/TR/using-aria/#label-support
@@ -66,5 +68,4 @@ aside {
     }
   }
 }
-
 

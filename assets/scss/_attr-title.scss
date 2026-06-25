@@ -1,3 +1,5 @@
+@use './mixins' as *;
+
 *[title] {
   @include warning('Avoid title attribute because of inconsistent UX');
 }

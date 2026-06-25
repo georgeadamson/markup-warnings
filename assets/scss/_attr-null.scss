@@ -1,3 +1,5 @@
+@use './mixins' as *;
+
 // Invalid attribute value caused by bad data:
 * {
   @each $attr in title, alt, href, aria-label, aria-labelledby, aria-describedby

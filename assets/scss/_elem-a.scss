@@ -1,3 +1,5 @@
+@use './mixins' as *;
+
 a[href=''] {
   @include error('<a> has empty href=""');
 }

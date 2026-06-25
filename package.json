@@ -1,24 +1,65 @@
 {
   "name": "markup-warnings",
   "version": "1.0.8",
-  "description": "",
-  "main": "Gulpfile.js",
-  "dependencies": {},
-  "devDependencies": {
-    "breakpoint-sass": "^2.7.0",
-    "browser-sync": "^2.18.2",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
-    "gulp-sass": "^2.3.2",
-    "gulp-sourcemaps": "^2.2.0"
-  },
+  "description": "CSS-only development helper for highlighting inaccessible or suspicious HTML and ARIA markup.",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "aria",
+    "bookmarklet",
+    "css",
+    "debugging",
+    "html",
+    "markup",
+    "sass",
+    "warnings"
+  ],
+  "main": "assets/dist/css/app.css",
+  "style": "assets/dist/css/app.css",
+  "files": [
+    "assets/dist/css/app.css",
+    "assets/images",
+    "assets/scss",
+    "index.html"
+  ],
   "scripts": {
-    "start": "gulp",
-    "build": "gulp prod",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run dev",
+    "dev": "npm run build:dev && concurrently -n css,server -c blue,green \"npm:watch:css\" \"npm:serve\"",
+    "serve": "browser-sync start --server . --files \"index.html,assets/dist/css/app.css\"",
+    "watch:css": "chokidar \"assets/scss/**/*.scss\" -c \"npm run build:dev\"",
+    "build": "npm run build:css",
+    "build:css": "sass assets/scss/app.scss assets/dist/css/app.css --style=compressed --no-source-map && postcss assets/dist/css/app.css --replace",
+    "build:dev": "sass assets/scss/app.scss assets/dist/css/app.css --style=expanded --embed-source-map && postcss assets/dist/css/app.css --replace --map inline",
+    "test": "node --test --experimental-test-coverage test/markup-warnings.test.js",
+    "test:watch": "node --test --watch test/markup-warnings.test.js",
     "deploy": "npm version patch && npm run build && npm publish"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgeadamson/markup-warnings.git"
+  },
+  "bugs": {
+    "url": "https://github.com/georgeadamson/markup-warnings/issues"
+  },
+  "homepage": "https://github.com/georgeadamson/markup-warnings#readme",
+  "author": "George Adamson",
   "license": "ISC",
-  "unpkg": "assets/dist/css/app.css"
+  "engines": {
+    "node": ">=18"
+  },
+  "unpkg": "assets/dist/css/app.css",
+  "browserslist": [
+    "last 2 versions",
+    "> 5%",
+    "Firefox ESR"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^10.5.2",
+    "browser-sync": "^3.0.4",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^10.0.3",
+    "postcss": "^8.5.15",
+    "postcss-cli": "^11.0.1",
+    "sass": "^1.101.0"
+  }
 }
