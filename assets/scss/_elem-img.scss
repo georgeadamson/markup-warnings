@@ -7,7 +7,7 @@
 // Unhelpful img alt consisting of one word:
 img {
   &[alt]:not([alt='']):not([alt*=' ']):not([alt*='-']) {
-    @include warning('<img> with one-word alt text may be unhelpful');
+    @include warning('<img> with one-word alt text may be unhelpful', '1.1.1');
   }
 }
 
@@ -17,7 +17,10 @@ img {
   &[alt='  '],
   &[alt='   '],
   &[alt='    '] {
-    @include error('<img> with alt text consisting of spaces is invalid');
+    @include error(
+      '<img> with alt text consisting of spaces is invalid',
+      '1.1.1'
+    );
   }
 }
 
@@ -28,7 +31,8 @@ img {
     &[alt^='#{$val}'],
     &[alt^='#{string.to-lower-case($val)}'] {
       @include warning(
-        "<img> with alt text starting with '#{$val}...' is unhelpful"
+        "<img> with alt text starting with '#{$val}...' is unhelpful",
+        '1.1.1'
       );
     }
   }
@@ -39,7 +43,7 @@ img {
   @each $attr in 'null', 'undefined', 'true', 'false', 'NaN', '0' {
     // Eg: img[alt='null']
     &[alt='#{$attr}'] {
-      @include warning("<img> with alt='#{$attr}' is unhelpful");
+      @include warning("<img> with alt='#{$attr}' is unhelpful", '1.1.1');
     }
   }
 }
@@ -51,7 +55,8 @@ img[alt=''] {
     // Eg: img[alt=''][aria-label]
     &[#{$aria}] {
       @include warning(
-        '<img> with #{$aria} and an empty alt attribute is confusing'
+        '<img> with #{$aria} and an empty alt attribute is confusing',
+        '1.1.1'
       );
     }
   }
@@ -61,14 +66,17 @@ img[alt=''] {
 img[alt]:not([alt='']) {
   @each $attr in title, aria-label, aria-labelledby {
     &[#{$attr}] {
-      @include error('<img> should not have both alt & #{$attr} attributes');
+      @include error(
+        '<img> should not have both alt & #{$attr} attributes',
+        '1.1.1'
+      );
     }
   }
 }
 
 // Img missing alt:
 img:not([alt]) {
-  @include error('<img> missing alt attribute');
+  @include error('<img> missing alt attribute', '1.1.1');
 }
 
 // Empty alt is ok for decorative images so let's ignore:

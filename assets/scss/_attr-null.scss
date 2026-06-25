@@ -2,12 +2,29 @@
 
 // Invalid attribute value caused by bad data:
 * {
-  @each $attr in title, alt, href, aria-label, aria-labelledby, aria-describedby
-  {
+  @each $attr in title, href {
     @each $val in 'null', 'undefined', 'true', 'false', 'NaN', '0' {
       // Eg: *[alt='null']
       &[#{$attr}='#{$val}'] {
         @include warning("Attribute #{$attr}='#{$val}' is invalid");
+      }
+    }
+  }
+
+  @each $attr in alt {
+    @each $val in 'null', 'undefined', 'true', 'false', 'NaN', '0' {
+      // Eg: *[alt='null']
+      &[#{$attr}='#{$val}'] {
+        @include warning("Attribute #{$attr}='#{$val}' is invalid", '1.1.1');
+      }
+    }
+  }
+
+  @each $attr in aria-label, aria-labelledby, aria-describedby {
+    @each $val in 'null', 'undefined', 'true', 'false', 'NaN', '0' {
+      // Eg: *[aria-label='null']
+      &[#{$attr}='#{$val}'] {
+        @include warning("Attribute #{$attr}='#{$val}' is invalid", '4.1.2');
       }
     }
   }

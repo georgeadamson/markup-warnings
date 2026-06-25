@@ -4,10 +4,10 @@
 
 label {
   &:empty {
-    @include error('<label> cannot be empty');
+    @include error('<label> cannot be empty', '3.3.2');
   }
 
   &[for]:empty {
-    @include error('<label> for a field must contain text');
+    @include error('<label> for a field must contain text', '3.3.2');
   }
 }

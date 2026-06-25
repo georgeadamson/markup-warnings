@@ -1,0 +1,31 @@
+@use './mixins' as *;
+
+html[aria-hidden='true'],
+body[aria-hidden='true'] {
+  @include error('Do not hide the page from assistive technology', '4.1.2');
+}
+
+@each $selector in 'a[href]', button, input, select, textarea, summary,
+  'audio[controls]', 'video[controls]', '[contenteditable=""]',
+  '[contenteditable="true"]', '[tabindex]:not([tabindex="-1"])'
+{
+  #{$selector}[aria-hidden='true'] {
+    @include error(
+      'Focusable elements should not use aria-hidden="true"',
+      '4.1.2'
+    );
+  }
+
+  [aria-hidden='true'] #{$selector} {
+    @include error(
+      'Focusable content inside aria-hidden="true" is hidden from assistive technology',
+      '4.1.2'
+    );
+  }
+}
+
+[aria-hidden='true'] [aria-hidden='false'] {
+  @include warning(
+    'aria-hidden="false" cannot expose content inside aria-hidden="true"'
+  );
+}

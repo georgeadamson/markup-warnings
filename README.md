@@ -13,6 +13,9 @@ test, not a complete accessibility audit: it cannot calculate accessible names,
 follow DOM references, evaluate JavaScript state, or catch problems that CSS
 selectors cannot express.
 
+Warnings include WCAG success criterion numbers when a selector maps cleanly to
+WCAG 2.2. Heuristic or browser-support warnings intentionally remain unnumbered.
+
 <img src="assets/images/markup-warnings-empty-title.png" alt="Example of empty title attribute warning" width="170"/>
 
 <img src="assets/images/markup-warnings-title-and-aria-label.png" alt="Example of title and aria-label warning" width="200"/>
@@ -22,16 +25,24 @@ selectors cannot express.
 The rules are grouped by the kind of markup they inspect. Current checks include:
 
 - Empty or placeholder attribute values such as `title="null"`, `alt="undefined"`, `href="false"`, `aria-label="0"`, and similar values often caused by bad data.
+- Empty ID, `for`, and ARIA reference/name attributes such as `aria-label=""`, `aria-labelledby=""`, and `aria-controls=""`.
 - `title` attributes, including empty `title` attributes and elements that combine `title` with `aria-label` or `aria-labelledby`.
-- Links with `href=""`, links with `href="#"`, and empty links without text or an accessible label.
+- Missing or suspicious page language attributes, including missing `html[lang]` and language tags that use underscores.
+- Links with `href=""`, links with `href="#"`, links without `href`, `javascript:` links, image-only links without accessible text, and empty links without text or an accessible label.
 - Images missing `alt`, images with whitespace-only alt text, images that combine non-empty `alt` with `title` or ARIA labels, and alt text that is likely to be unhelpful.
+- Image submit buttons and plain button inputs that do not expose a useful label.
+- Iframes without a `title`.
+- Tables without obvious header cells, empty table headers/captions, and empty or invalid table header attributes.
 - ARIA labels on elements or roles where support is limited, ignored, or likely to override useful visible text.
 - `aria-describedby` on plain `div` or `span` elements without a role.
+- ARIA ID references that look like CSS selectors, `aria-hidden` on focusable content, and redundant native HTML state mixed with ARIA state.
 - Redundant or risky `role` attributes on elements with native semantics.
-- Empty `label` and `button` elements.
+- Abstract, deprecated, or incorrectly cased ARIA roles, plus custom interactive roles that are not keyboard focusable.
+- Empty `label` and `button` elements, icon-only buttons without an accessible label, suspicious `tabindex`, and inline `onclick` handlers on non-interactive elements.
 
-Some image warnings may not render in every browser because support for
-pseudo-elements on `img` is limited.
+Some warnings on replaced elements such as `img`, `input[type="image"]`, and
+`iframe` may not render in every browser because pseudo-element support for
+those elements is limited.
 
 ## Usage
 

@@ -8,6 +8,25 @@ a[href='#'] {
   @include warning('<a> has invalid href="#"');
 }
 
+a:not([href]):not([name]) {
+  @include warning(
+    '<a> without href is not keyboard focusable by default',
+    '2.1.1'
+  );
+}
+
+a[href^='javascript:'] {
+  @include warning('<a> with javascript: href should be a button');
+}
+
 a:empty:not([title]):not([aria-label]):not([aria-labelledby]) {
-  @include warning('<a> has missing text');
+  @include warning('<a> has missing text', '2.4.4');
+}
+
+a:has(> img[alt='']:only-child):not([aria-label]):not([aria-labelledby]),
+a:has(> img:not([alt]):only-child):not([aria-label]):not([aria-labelledby]) {
+  @include warning(
+    '<a> with image-only content needs accessible link text',
+    '2.4.4'
+  );
 }

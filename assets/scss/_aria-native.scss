@@ -1,0 +1,11 @@
+@use './mixins' as *;
+
+@each $selector, $attr in ('[disabled]', aria-disabled),
+  ('[required]', aria-required), ('[readonly]', aria-readonly),
+  ('[checked]', aria-checked), ('[selected]', aria-selected),
+  ('[colspan]', aria-colspan), ('[rowspan]', aria-rowspan)
+{
+  #{$selector}[#{$attr}] {
+    @include warning('Use the native #{$selector} attribute without #{$attr}', '4.1.2');
+  }
+}

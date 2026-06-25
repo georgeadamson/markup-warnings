@@ -1,0 +1,5 @@
+@use './mixins' as *;
+
+[tabindex]:not([tabindex='0']):not([tabindex='-1']) {
+  @include warning('Avoid positive or invalid tabindex values', '2.4.3');
+}

@@ -5,7 +5,16 @@
 button {
   &:empty:not([aria-label]):not([aria-labelledby]) {
     @include error(
-      '<button> without aria-label or aria-labelledby must contain text'
+      '<button> without aria-label or aria-labelledby must contain text',
+      '4.1.2'
+    );
+  }
+
+  &:has(> svg:only-child):not([aria-label]):not([aria-labelledby]),
+  &:has(> img[alt='']:only-child):not([aria-label]):not([aria-labelledby]) {
+    @include warning(
+      '<button> with icon-only content needs aria-label or aria-labelledby',
+      '4.1.2'
     );
   }
 }

@@ -254,6 +254,45 @@
         padding: 0 14px;
       }
 
+      .sample input {
+        width: fit-content;
+        min-height: 34px;
+        border: 1px solid #9da39a;
+        border-radius: 4px;
+        background: #ffffff;
+        color: var(--ink);
+        font: inherit;
+        padding: 0 10px;
+      }
+
+      .sample svg {
+        display: block;
+        width: 20px;
+        height: 20px;
+      }
+
+      .sample table {
+        width: min(100%, 320px);
+        border-collapse: collapse;
+        background: #ffffff;
+      }
+
+      .sample caption,
+      .sample th,
+      .sample td {
+        border: 1px solid #c9ccbe;
+        padding: 8px;
+        text-align: left;
+      }
+
+      .sample iframe {
+        width: min(100%, 320px);
+        height: 92px;
+        border: 1px solid #9da39a;
+        border-radius: 6px;
+        background: #ffffff;
+      }
+
       .sample label:empty {
         border: 1px solid #9da39a;
         border-radius: 4px;
@@ -382,7 +421,7 @@
       <div class="page-shell">
         <div class="demo-intro">
           <div class="stat">
-            <strong>9</strong>
+            <strong>19</strong>
             <span>rule groups are loaded from the Sass entrypoint.</span>
           </div>
           <div class="stat">
@@ -440,6 +479,17 @@
 
             <article class="example">
               <div class="example__header">
+                <h3>Empty ARIA label</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <button aria-label="">Icon action</button>
+              </div>
+              <pre class="example__code"><code>&lt;button aria-label=""&gt;Icon action&lt;/button&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
                 <h3>Empty href</h3>
                 <span class="badge badge--error">Error</span>
               </div>
@@ -447,6 +497,40 @@
                 <a href="">Reload current page</a>
               </div>
               <pre class="example__code"><code>&lt;a href=""&gt;Reload current page&lt;/a&gt;</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>Document Warnings</h2>
+            <p>
+              Page-level and embedded-content checks catch missing language
+              metadata and unnamed frames.
+            </p>
+          </div>
+
+          <div class="example-grid">
+            <article class="example">
+              <div class="example__header">
+                <h3>Suspicious lang</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <span lang="en_US">Regional language tag</span>
+              </div>
+              <pre class="example__code"><code>&lt;span lang="en_US"&gt;Regional language tag&lt;/span&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Unnamed iframe</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <iframe srcdoc="&lt;p&gt;Embedded preview&lt;/p&gt;"></iframe>
+              </div>
+              <pre class="example__code"><code>&lt;iframe srcdoc="..."&gt;&lt;/iframe&gt;</code></pre>
             </article>
           </div>
         </section>
@@ -481,6 +565,47 @@
                 <a href="/"></a>
               </div>
               <pre class="example__code"><code>&lt;a href="/"&gt;&lt;/a&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>No href</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <a>Looks like a link</a>
+              </div>
+              <pre class="example__code"><code>&lt;a&gt;Looks like a link&lt;/a&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>JavaScript href</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <a href="javascript:void(0)">Open menu</a>
+              </div>
+              <pre class="example__code"><code>&lt;a href="javascript:void(0)"&gt;Open menu&lt;/a&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Image-only link</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample sample--tall">
+                <a href="/">
+                  <img
+                    class="demo-image"
+                    src="assets/images/markup-warnings-empty-title.png"
+                    alt=""
+                    width="170"
+                    height="168"
+                  />
+                </a>
+              </div>
+              <pre class="example__code"><code>&lt;a href="/"&gt;&lt;img src="example.png" alt=""&gt;&lt;/a&gt;</code></pre>
             </article>
           </div>
         </section>
@@ -612,6 +737,54 @@
               </div>
               <pre class="example__code"><code>&lt;button&gt;&lt;/button&gt;</code></pre>
             </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Image input missing alt</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <input
+                  type="image"
+                  src="assets/images/markup-warnings-empty-title.png"
+                  width="48"
+                  height="48"
+                />
+              </div>
+              <pre class="example__code"><code>&lt;input type="image" src="submit.png"&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Unlabeled button input</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <input type="button" />
+              </div>
+              <pre class="example__code"><code>&lt;input type="button"&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Icon-only button</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <button type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M12 5v14m-7-7h14"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <pre class="example__code"><code>&lt;button type="button"&gt;&lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;&lt;/button&gt;</code></pre>
+            </article>
           </div>
         </section>
 
@@ -668,6 +841,154 @@
                 <span id="demo-help" hidden>Extra details</span>
               </div>
               <pre class="example__code"><code>&lt;span aria-describedby="demo-help"&gt;More details&lt;/span&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>CSS selector IDREF</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <button aria-controls="#demo-panel">Toggle panel</button>
+              </div>
+              <pre class="example__code"><code>&lt;button aria-controls="#demo-panel"&gt;Toggle panel&lt;/button&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Hidden focusable control</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <button aria-hidden="true">Dismiss</button>
+              </div>
+              <pre class="example__code"><code>&lt;button aria-hidden="true"&gt;Dismiss&lt;/button&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Native plus ARIA state</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <button disabled aria-disabled="true">Unavailable</button>
+              </div>
+              <pre class="example__code"><code>&lt;button disabled aria-disabled="true"&gt;Unavailable&lt;/button&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Uppercase role</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <div class="role-demo" role="Button" tabindex="0">Open drawer</div>
+              </div>
+              <pre class="example__code"><code>&lt;div role="Button" tabindex="0"&gt;Open drawer&lt;/div&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Custom role not focusable</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <div class="role-demo" role="button">Open drawer</div>
+              </div>
+              <pre class="example__code"><code>&lt;div role="button"&gt;Open drawer&lt;/div&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Abstract role</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <div class="role-demo" role="command">Command item</div>
+              </div>
+              <pre class="example__code"><code>&lt;div role="command"&gt;Command item&lt;/div&gt;</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <div class="section-heading">
+            <h2>Table And Interaction Warnings</h2>
+            <p>
+              Structural table checks and keyboard-focus checks catch common
+              markup that looks usable but is fragile for assistive technology.
+            </p>
+          </div>
+
+          <div class="example-grid">
+            <article class="example">
+              <div class="example__header">
+                <h3>Table without headers</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <table>
+                  <tr>
+                    <td>Plan</td>
+                    <td>Price</td>
+                  </tr>
+                </table>
+              </div>
+              <pre class="example__code"><code>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Plan&lt;/td&gt;&lt;td&gt;Price&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Invalid header scope</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <table>
+                  <tr>
+                    <th scope="both">Plan</th>
+                    <td>Starter</td>
+                  </tr>
+                </table>
+              </div>
+              <pre class="example__code"><code>&lt;th scope="both"&gt;Plan&lt;/th&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Empty headers reference</h3>
+                <span class="badge badge--error">Error</span>
+              </div>
+              <div class="sample">
+                <table>
+                  <tr>
+                    <th id="plan-heading">Plan</th>
+                    <td headers="">Starter</td>
+                  </tr>
+                </table>
+              </div>
+              <pre class="example__code"><code>&lt;td headers=""&gt;Starter&lt;/td&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Positive tabindex</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <button type="button" tabindex="2">Jump ahead</button>
+              </div>
+              <pre class="example__code"><code>&lt;button tabindex="2"&gt;Jump ahead&lt;/button&gt;</code></pre>
+            </article>
+
+            <article class="example">
+              <div class="example__header">
+                <h3>Clickable div</h3>
+                <span class="badge">Warning</span>
+              </div>
+              <div class="sample">
+                <div class="role-demo" onclick="void 0">Open details</div>
+              </div>
+              <pre class="example__code"><code>&lt;div onclick="void 0"&gt;Open details&lt;/div&gt;</code></pre>
             </article>
           </div>
         </section>

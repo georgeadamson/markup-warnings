@@ -1,0 +1,10 @@
+@use './mixins' as *;
+
+[onclick]:not(a[href]):not(button):not(input):not(select):not(textarea):not(
+    summary
+  ):not([role]):not([tabindex]) {
+  @include warning(
+    'Elements with onclick should use a semantic control, role, or tabindex',
+    '2.1.1'
+  );
+}

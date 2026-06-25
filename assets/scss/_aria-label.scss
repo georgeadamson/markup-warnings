@@ -5,7 +5,7 @@
 // https://www.w3.org/TR/using-aria/#label-support
 
 a:empty:not([title]):not([aria-label]) {
-  @include error('missing text');
+  @include error('missing text', '2.4.4');
 }
 
 // For most assistive technology it's fine to use aria-label or aria-labelledby on the <nav>, and <main> elements but not on <footer>, <section>, <article>, or <header> .
@@ -64,8 +64,7 @@ aside {
   @each $attr in aria-label, aria-labelledby {
     // Eg: div[aria-label]:not([role])
     #{$tag}[#{$attr}]:not([role]) {
-      @include error("Don't use #{$attr} on <#{$tag}> without a role");
+      @include error("Don't use #{$attr} on <#{$tag}> without a role", '4.1.2');
     }
   }
 }
-

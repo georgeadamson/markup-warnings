@@ -1,0 +1,34 @@
+@use './mixins' as *;
+
+input[type='image']:not([alt]) {
+  @include error('<input type="image"> missing alt attribute', '1.1.1');
+}
+
+input[type='image'][alt=''],
+input[type='image'][alt=' '],
+input[type='image'][alt='  '],
+input[type='image'][alt='   '],
+input[type='image'][alt='    '] {
+  @include error('<input type="image"> alt attribute must not be empty', '1.1.1');
+}
+
+input[type='button']:not([value]):not([aria-label]):not([aria-labelledby]),
+input[type='button'][value='']:not([aria-label]):not([aria-labelledby]),
+input[type='button'][value=' ']:not([aria-label]):not([aria-labelledby]),
+input[type='button'][value='  ']:not([aria-label]):not([aria-labelledby]) {
+  @include error(
+    '<input type="button"> needs a value, aria-label, or aria-labelledby',
+    '4.1.2'
+  );
+}
+
+@each $type in submit, reset {
+  input[type='#{$type}'][value='']:not([aria-label]):not([aria-labelledby]),
+  input[type='#{$type}'][value=' ']:not([aria-label]):not([aria-labelledby]),
+  input[type='#{$type}'][value='  ']:not([aria-label]):not([aria-labelledby]) {
+    @include warning(
+      '<input type="#{$type}"> has an empty value and may have no accessible name',
+      '4.1.2'
+    );
+  }
+}

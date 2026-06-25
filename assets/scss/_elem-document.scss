@@ -1,0 +1,27 @@
+@use './mixins' as *;
+
+html:not([lang]) body {
+  @include error('<html> missing lang attribute', '3.1.1');
+}
+
+html[lang=''] body,
+html[lang=' '] body,
+html[lang='  '] body,
+html[lang='   '] body,
+html[lang='    '] body {
+  @include error('<html> lang attribute must not be empty', '3.1.1');
+}
+
+html[lang*='_'] body {
+  @include warning(
+    'Use BCP 47 language tags with hyphens, not underscores',
+    '3.1.1'
+  );
+}
+
+*:not(html)[lang*='_'] {
+  @include warning(
+    'Use BCP 47 language tags with hyphens, not underscores',
+    '3.1.2'
+  );
+}

@@ -1,0 +1,34 @@
+@use './mixins' as *;
+
+table:not(:has(th)):not([role='presentation']):not([role='none']) {
+  @include warning('<table> has no header cells', '1.3.1');
+}
+
+caption:empty {
+  @include warning('<caption> cannot be empty', '1.3.1');
+}
+
+th:empty {
+  @include warning('<th> cannot be empty', '1.3.1');
+}
+
+th[scope=''],
+th[scope=' '],
+th[scope='  '] {
+  @include error('<th> scope attribute must not be empty', '1.3.1');
+}
+
+th[scope]:not([scope='row']):not([scope='col']):not([scope='rowgroup']):not(
+    [scope='colgroup']
+  ) {
+  @include warning('<th> has an invalid scope attribute', '1.3.1');
+}
+
+td[headers=''],
+td[headers=' '],
+td[headers='  '],
+th[headers=''],
+th[headers=' '],
+th[headers='  '] {
+  @include error('Table headers attribute must not be empty', '1.3.1');
+}

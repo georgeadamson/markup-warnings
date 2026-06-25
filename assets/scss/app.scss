@@ -1,4 +1,5 @@
 // Attributes:
+@use './attr-empty';
 @use './attr-null';
 @use './attr-title';
 
@@ -6,9 +7,20 @@
 @use './aria-role';
 @use './aria-label';
 @use './aria-describedby';
+@use './aria-hidden';
+@use './aria-idref';
+@use './aria-native';
 
 // Elements:
+@use './elem-document';
 @use './elem-a';
+@use './elem-iframe';
 @use './elem-img';
+@use './elem-input';
 @use './elem-label';
 @use './elem-button';
+@use './elem-table';
+
+// Interaction:
+@use './focus';
+@use './interaction';

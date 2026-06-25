@@ -1,0 +1,10 @@
+@use './mixins' as *;
+
+@each $attr in aria-labelledby, aria-describedby, aria-controls, aria-owns,
+  aria-activedescendant, aria-details, aria-errormessage
+{
+  *[#{$attr}^='#'],
+  *[#{$attr}^='.'] {
+    @include error('#{$attr} should reference IDs without # or . prefixes', '4.1.2');
+  }
+}

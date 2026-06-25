@@ -17,3 +17,35 @@
     @include warning('#{$tag} should not have ARIA role attribute');
   }
 }
+
+@each $role in command, composite, input, landmark, range, roletype, section,
+  sectionhead, select, structure, widget, window, directory
+{
+  [role='#{$role}'] {
+    @include warning("role='#{$role}' is abstract or deprecated", '4.1.2');
+  }
+}
+
+@each $letter in A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T,
+  U, V, W, X, Y, Z
+{
+  [role*='#{$letter}'] {
+    @include warning('ARIA role values should be lowercase', '4.1.2');
+  }
+}
+
+@each $role in button, link, checkbox, menuitem, radio, switch, tab {
+  [role='#{$role}']:not(a[href]):not(button):not(input):not(select):not(
+      textarea
+    ):not(summary):not([tabindex]) {
+    @include warning("Custom role='#{$role}' should be keyboard focusable", '2.1.1');
+  }
+}
+
+[role='presentation'][tabindex]:not([tabindex='-1']),
+[role='none'][tabindex]:not([tabindex='-1']) {
+  @include warning(
+    'Focusable elements should not use role="presentation" or role="none"',
+    '4.1.2'
+  );
+}

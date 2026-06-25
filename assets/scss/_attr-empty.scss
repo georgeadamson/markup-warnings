@@ -1,0 +1,25 @@
+@use './mixins' as *;
+
+// Empty or whitespace-only attributes that are expected to carry accessible
+// names or ID references.
+* {
+  @each $attr in aria-label, aria-labelledby, aria-describedby, aria-controls {
+    &[#{$attr}=''],
+    &[#{$attr}=' '],
+    &[#{$attr}='  '],
+    &[#{$attr}='   '],
+    &[#{$attr}='    '] {
+      @include error('Attribute #{$attr} must not be empty', '4.1.2');
+    }
+  }
+
+  @each $attr in for, id {
+    &[#{$attr}=''],
+    &[#{$attr}=' '],
+    &[#{$attr}='  '],
+    &[#{$attr}='   '],
+    &[#{$attr}='    '] {
+      @include error('Attribute #{$attr} must not be empty');
+    }
+  }
+}

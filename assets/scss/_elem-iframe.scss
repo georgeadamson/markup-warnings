@@ -1,0 +1,13 @@
+@use './mixins' as *;
+
+iframe:not([title]) {
+  @include error('<iframe> missing title attribute', '4.1.2');
+}
+
+iframe[title=''],
+iframe[title=' '],
+iframe[title='  '],
+iframe[title='   '],
+iframe[title='    '] {
+  @include error('<iframe> title attribute must not be empty', '4.1.2');
+}

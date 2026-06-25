@@ -1,3 +1,11 @@
+@function wcag-suffix($wcag) {
+  @if $wcag == null or $wcag == '' {
+    @return '';
+  }
+
+  @return ' (WCAG #{$wcag})';
+}
+
 %warning {
   /* Highlight element with a dotted line and ensure our message will position correctly: */
   outline: 1px dashed #000;
@@ -16,11 +24,11 @@
     color: #000;
 
     font-family: sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     line-height: 2;
     white-space: nowrap;
 
-    padding: 0.1em;
+    padding: 0.05em 0.1em;
 
     display: block;
     position: absolute;
@@ -57,16 +65,16 @@
   }
 }
 
-@mixin warning($message) {
+@mixin warning($message, $wcag: null) {
   @extend %warning;
   &:after {
-    content: '💩 #{$message}';
+    content: '💩 #{$message}#{wcag-suffix($wcag)}';
   }
 }
 
-@mixin error($message) {
+@mixin error($message, $wcag: null) {
   @extend %error;
   &:after {
-    content: '⚠️ #{$message}';
+    content: '⚠️ #{$message}#{wcag-suffix($wcag)}';
   }
 }

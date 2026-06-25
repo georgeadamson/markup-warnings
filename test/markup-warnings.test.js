@@ -27,6 +27,13 @@ function cssAttrSelectorPattern(selector, attr, value) {
   );
 }
 
+function assertCompiledRules(expectedRules) {
+  for (const [selectorPattern, message] of expectedRules) {
+    assert.match(compiledCss, selectorPattern);
+    assert.ok(compiledCss.includes(message));
+  }
+}
+
 test('package metadata exposes the compiled stylesheet for unpkg', () => {
   const pkg = JSON.parse(readProjectFile('package.json'));
   const exposedPath = path.join(rootDir, pkg.unpkg);
@@ -68,15 +75,25 @@ test('Sass entrypoint uses every rule group in order', () => {
   );
 
   assert.deepEqual(uses, [
+    'attr-empty',
     'attr-null',
     'attr-title',
     'aria-role',
     'aria-label',
     'aria-describedby',
+    'aria-hidden',
+    'aria-idref',
+    'aria-native',
+    'elem-document',
     'elem-a',
+    'elem-iframe',
     'elem-img',
+    'elem-input',
     'elem-label',
-    'elem-button'
+    'elem-button',
+    'elem-table',
+    'focus',
+    'interaction'
   ]);
 });
 
@@ -113,10 +130,131 @@ test('compiled stylesheet contains core selector warnings', () => {
     ]
   ];
 
-  for (const [selectorPattern, message] of expectedRules) {
-    assert.match(compiledCss, selectorPattern);
-    assert.ok(compiledCss.includes(message));
+  assertCompiledRules(expectedRules);
+});
+
+test('compiled stylesheet contains document, embedded content, and table warnings', () => {
+  assertCompiledRules([
+    [/html:not\(\[lang\]\) body:after/, '<html> missing lang attribute'],
+    [
+      /html\[lang\*=_\] body:after/,
+      'Use BCP 47 language tags with hyphens, not underscores'
+    ],
+    [/iframe:not\(\[title\]\):after/, '<iframe> missing title attribute'],
+    [
+      /iframe\[title=(["'])\1\]:after/,
+      '<iframe> title attribute must not be empty'
+    ],
+    [
+      /table:not\(:has\(th\)\):not\(\[role=presentation\]\):not\(\[role=none\]\):after/,
+      '<table> has no header cells'
+    ],
+    [/caption:empty:after/, '<caption> cannot be empty'],
+    [
+      /th\[scope\]:not\(\[scope=row\]\):not\(\[scope=col\]\):not\(\[scope=rowgroup\]\):not\(\[scope=colgroup\]\):after/,
+      '<th> has an invalid scope attribute'
+    ],
+    [
+      /td\[headers=(["'])\1\]:after/,
+      'Table headers attribute must not be empty'
+    ]
+  ]);
+});
+
+test('compiled stylesheet contains additional ARIA and focus warnings', () => {
+  assertCompiledRules([
+    [/\[aria-label=(["'])\1\]:after/, 'Attribute aria-label must not be empty'],
+    [
+      /\[aria-labelledby\^="#"\]:after/,
+      'aria-labelledby should reference IDs without # or . prefixes'
+    ],
+    [
+      /html\[aria-hidden=true\]:after/,
+      'Do not hide the page from assistive technology'
+    ],
+    [
+      /button\[aria-hidden=true\]:after/,
+      'Focusable elements should not use aria-hidden="true"'
+    ],
+    [
+      /\[aria-hidden=true\] button:after/,
+      'Focusable content inside aria-hidden="true" is hidden from assistive technology'
+    ],
+    [
+      /\[disabled\]\[aria-disabled\]:after/,
+      'Use the native [disabled] attribute without aria-disabled'
+    ],
+    [/\[role=command\]:after/, "role='command' is abstract or deprecated"],
+    [/\[role\*=A\]:after/, 'ARIA role values should be lowercase'],
+    [
+      /\[role=button\]:not\(a\[href\]\):not\(button\):not\(input\):not\(select\):not\(textarea\):not\(summary\):not\(\[tabindex\]\):after/,
+      "Custom role='button' should be keyboard focusable"
+    ],
+    [
+      /\[tabindex\]:not\(\[tabindex="0"\]\):not\(\[tabindex="-1"\]\):after/,
+      'Avoid positive or invalid tabindex values'
+    ]
+  ]);
+});
+
+test('compiled stylesheet contains additional link, button, and input warnings', () => {
+  assertCompiledRules([
+    [
+      /a:not\(\[href\]\):not\(\[name\]\):after/,
+      '<a> without href is not keyboard focusable by default'
+    ],
+    [
+      /a\[href\^="javascript:"\]:after/,
+      '<a> with javascript: href should be a button'
+    ],
+    [
+      /a:has\(>img\[alt=(["'])\1\]:only-child\):not\(\[aria-label\]\):not\(\[aria-labelledby\]\):after/,
+      '<a> with image-only content needs accessible link text'
+    ],
+    [
+      /button:has\(>svg:only-child\):not\(\[aria-label\]\):not\(\[aria-labelledby\]\):after/,
+      '<button> with icon-only content needs aria-label or aria-labelledby'
+    ],
+    [
+      /input\[type=image\]:not\(\[alt\]\):after/,
+      '<input type="image"> missing alt attribute'
+    ],
+    [
+      /input\[type=button\]:not\(\[value\]\):not\(\[aria-label\]\):not\(\[aria-labelledby\]\):after/,
+      '<input type="button"> needs a value, aria-label, or aria-labelledby'
+    ],
+    [
+      /\[onclick\]:not\(a\[href\]\):not\(button\):not\(input\):not\(select\):not\(textarea\):not\(summary\):not\(\[role\]\):not\(\[tabindex\]\):after/,
+      'Elements with onclick should use a semantic control, role, or tabindex'
+    ]
+  ]);
+});
+
+test('compiled stylesheet appends WCAG references where rules map cleanly', () => {
+  const expectedMessages = [
+    '<img> missing alt attribute (WCAG 1.1.1)',
+    '<table> has no header cells (WCAG 1.3.1)',
+    '<a> without href is not keyboard focusable by default (WCAG 2.1.1)',
+    'Avoid positive or invalid tabindex values (WCAG 2.4.3)',
+    '<a> has missing text (WCAG 2.4.4)',
+    '<html> missing lang attribute (WCAG 3.1.1)',
+    'Use BCP 47 language tags with hyphens, not underscores (WCAG 3.1.2)',
+    '<label> cannot be empty (WCAG 3.3.2)',
+    'Attribute aria-label must not be empty (WCAG 4.1.2)',
+    '<button> without aria-label or aria-labelledby must contain text (WCAG 4.1.2)'
+  ];
+
+  for (const message of expectedMessages) {
+    assert.ok(
+      compiledCss.includes(message),
+      `Expected WCAG message: ${message}`
+    );
   }
+
+  assert.ok(
+    compiledCss.includes('Avoid title attribute because of inconsistent UX"'),
+    'Heuristic-only warnings should not receive a WCAG reference'
+  );
 });
 
 test('compiled stylesheet contains generated invalid attribute warnings', () => {
