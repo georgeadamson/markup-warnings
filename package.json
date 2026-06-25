@@ -31,7 +31,8 @@
     "build:dev": "sass assets/scss/app.scss assets/dist/css/app.css --style=expanded --embed-source-map && postcss assets/dist/css/app.css --replace --map inline",
     "test": "node --test --experimental-test-coverage test/markup-warnings.test.js",
     "test:watch": "node --test --watch test/markup-warnings.test.js",
-    "deploy": "npm version patch && npm run build && npm publish"
+    "bump": "npm version patch && git push",
+    "prepublishOnly": "npm test && npm run bump"
   },
   "repository": {
     "type": "git",

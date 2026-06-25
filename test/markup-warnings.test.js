@@ -48,8 +48,18 @@ test('package metadata exposes the compiled stylesheet for unpkg', () => {
   assert.equal(pkg.bugs.url, 'https://github.com/georgeadamson/markup-warnings/issues');
   assert.equal(pkg.homepage, 'https://github.com/georgeadamson/markup-warnings#readme');
   assert.equal(pkg.author, 'George Adamson');
+  assert.equal(pkg.license, 'ISC');
   assert.equal(pkg.engines.node, '>=18');
   assert.ok(fs.existsSync(exposedPath), `${pkg.unpkg} should exist`);
+});
+
+test('repository includes an ISC license file', () => {
+  const licenseText = readProjectFile('LICENSE');
+
+  assert.match(licenseText, /^ISC License/);
+  assert.match(licenseText, /Copyright \(c\) 2026 George Adamson/);
+  assert.match(licenseText, /Permission to use, copy, modify, and\/or distribute/);
+  assert.match(licenseText, /THE SOFTWARE IS PROVIDED "AS IS"/);
 });
 
 test('package scripts use Sass and PostCSS instead of Gulp', () => {
@@ -61,6 +71,10 @@ test('package scripts use Sass and PostCSS instead of Gulp', () => {
   assert.equal(pkg.main, 'assets/dist/css/app.css');
   assert.match(pkg.scripts['build:css'], /\bsass\b/);
   assert.match(pkg.scripts['build:css'], /\bpostcss\b/);
+  assert.match(pkg.scripts.bump, /\bnpm version patch\b/);
+  assert.match(pkg.scripts.bump, /\bgit push\b/);
+  assert.match(pkg.scripts.prepublishOnly, /\bnpm test\b/);
+  assert.match(pkg.scripts.prepublishOnly, /\bnpm run bump\b/);
   assert.ok(!fs.existsSync(path.join(rootDir, 'Gulpfile.js')));
   assert.ok(devDependencies.sass);
   assert.ok(devDependencies.postcss);
